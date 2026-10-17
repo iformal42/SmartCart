@@ -1,5 +1,11 @@
 import React, { useCallback } from 'react';
-import { FlatList, ScrollView, StyleSheet, View } from 'react-native';
+import {
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
@@ -15,6 +21,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { useNavigation } from '@react-navigation/native';
 import { toggleWishlist } from '../slices/whitelists.slice';
 import { Product } from '../../../types/product';
+import { addToCart } from '../../../shared/components/cart.slice';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,
@@ -24,6 +31,9 @@ type Props = NativeStackScreenProps<
 export default function ProductDetailsScreen({ route }: Props) {
   const { product } = route.params;
   const dispatch = useAppDispatch();
+  const handleAddToCart = () => {
+    dispatch(addToCart(product));
+  };
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const wishlistedIds = useAppSelector(state =>
@@ -61,6 +71,18 @@ export default function ProductDetailsScreen({ route }: Props) {
         <AppText style={styles.description} fontSize={15}>
           {product.description}
         </AppText>
+        <TouchableOpacity
+          style={[
+            styles.addToCartButton,
+            product.stock <= 0 && { opacity: 0.5 },
+          ]}
+          onPress={handleAddToCart}
+          disabled={product.stock <= 0}
+        >
+          <AppText style={styles.addToCartText} fontSize={16}>
+            {product.stock > 0 ? 'Add to Cart' : 'Out of Stock'}
+          </AppText>
+        </TouchableOpacity>
         <AppText style={styles.heading} fontSize={18}>
           Similar products
         </AppText>
@@ -144,5 +166,16 @@ const styles = StyleSheet.create({
     marginTop: 20,
     color: '#16803D',
     fontWeight: '600',
+  },
+  addToCartButton: {
+    backgroundColor: '#171717',
+    padding: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  addToCartText: {
+    color: '#FFFFFF',
+    fontWeight: '700',
   },
 });
