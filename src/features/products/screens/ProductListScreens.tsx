@@ -1,5 +1,11 @@
 import React, { useCallback, useEffect } from 'react';
-import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
+import {
+  FlatList,
+  Pressable,
+  RefreshControl,
+  StyleSheet,
+  View,
+} from 'react-native';
 import { Product } from '../../../types/product';
 import ProductCard from '../components/ProductCard';
 import { useProducts } from '../hooks/useProducts';
@@ -29,6 +35,12 @@ export default function ProductListScreen() {
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const wishlistedIds = useAppSelector(state =>
     state.wishlist.items.map(product => product.id),
+  );
+  const cartItems = useAppSelector(state => state.cart.items);
+
+  const cartItemCount = cartItems.reduce(
+    (total, item) => total + item.quantity,
+    0,
   );
 
   const handleToggleWishlist = useCallback(
@@ -99,6 +111,11 @@ export default function ProductListScreen() {
           {products.length} / {total} products
         </AppText>
       </View>
+      <Pressable onPress={() => navigation.navigate(ROUTE_NAMES.Cart)}>
+        <AppText fontSize={16} style={styles.cartButton}>
+          Cart ({cartItemCount})
+        </AppText>
+      </Pressable>
 
       <FlatList
         data={products}
@@ -176,5 +193,12 @@ const styles = StyleSheet.create({
     marginTop: 12,
     color: '#2563EB',
     fontWeight: '600',
+  },
+  cartButton: {
+    color: '#2563EB',
+    fontWeight: '600',
+    alignSelf: 'flex-end',
+    marginRight: 18,
+    marginVertical: 10,
   },
 });

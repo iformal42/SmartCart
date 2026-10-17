@@ -4,9 +4,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import RootNavigator from './navigation/RootNavigator';
 import { useWishlistPersistence } from '../products/hooks/useWishlistPersistence';
+import { useCartPersistence } from '../cart/hooks/useCartPersistence';
 
 function AppProvider() {
   useWishlistPersistence();
+  useCartPersistence();
   return (
     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <NavigationContainer>
