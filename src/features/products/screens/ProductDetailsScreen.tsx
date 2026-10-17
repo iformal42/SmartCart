@@ -1,10 +1,20 @@
-import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React, { useCallback } from 'react';
+import { FlatList, ScrollView, StyleSheet, View } from 'react-native';
+import {
+  NativeStackNavigationProp,
+  NativeStackScreenProps,
+} from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../types/naviagation';
 import { ROUTE_NAMES } from '../../app/constants/route.constant';
 import AppText from '../../../shared/components/AppText';
 import ProductGallery from '../components/ProductGallery';
+import Loader from '../../../shared/components/Loader';
+import ProductCard from '../components/ProductCard';
+import { useSimilarProducts } from '../hooks/useSimilarProducts';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
+import { useNavigation } from '@react-navigation/native';
+import { toggleWishlist } from '../slices/whitelists.slice';
+import { Product } from '../../../types/product';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,
@@ -13,6 +23,21 @@ type Props = NativeStackScreenProps<
 
 export default function ProductDetailsScreen({ route }: Props) {
   const { product } = route.params;
+  const dispatch = useAppDispatch();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const wishlistedIds = useAppSelector(state =>
+    state.wishlist.items.map(product => product.id),
+  );
+
+  const handleToggleWishlist = useCallback(
+    (product: Product) => {
+      dispatch(toggleWishlist(product));
+    },
+    [dispatch],
+  );
+  const { products: similarProducts, loading: similarLoading } =
+    useSimilarProducts(product.category, product.id);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -36,6 +61,33 @@ export default function ProductDetailsScreen({ route }: Props) {
         <AppText style={styles.description} fontSize={15}>
           {product.description}
         </AppText>
+        <AppText style={styles.heading} fontSize={18}>
+          Similar products
+        </AppText>
+
+        {similarLoading ? (
+          <Loader size="small" message="" />
+        ) : (
+          <FlatList
+            horizontal
+            data={similarProducts}
+            keyExtractor={item => String(item.id)}
+            renderItem={({ item }) => (
+              <ProductCard
+                variant="horizontal"
+                product={item}
+                onPress={() => {
+                  navigation.push(ROUTE_NAMES.ProductDetails, {
+                    product: item,
+                  });
+                }}
+                onToggleWishlist={handleToggleWishlist}
+                isWishlisted={wishlistedIds.includes(item.id)}
+              />
+            )}
+            showsHorizontalScrollIndicator={false}
+          />
+        )}
       </View>
 
       <AppText style={styles.stock} fontSize={16}>

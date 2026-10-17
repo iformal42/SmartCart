@@ -7,6 +7,7 @@ interface ProductCardProps {
   onPress: (product: Product) => void;
   onToggleWishlist: (product: Product) => void;
   isWishlisted?: boolean;
+  variant?: 'grid' | 'horizontal';
 }
 
 function ProductCard({
@@ -14,6 +15,7 @@ function ProductCard({
   onPress,
   onToggleWishlist,
   isWishlisted = false,
+  variant = 'grid',
 }: ProductCardProps) {
   const handlePress = () => {
     onPress(product);
@@ -25,7 +27,10 @@ function ProductCard({
 
   return (
     <Pressable
-      style={styles.card}
+      style={[
+        styles.card,
+        variant === 'grid' ? styles.gridCard : styles.horizontalCard,
+      ]}
       onPress={handlePress}
       accessibilityRole="button"
       accessibilityLabel={`View ${product.title}`}
@@ -76,13 +81,20 @@ export default ProductCard;
 
 const styles = StyleSheet.create({
   card: {
-    flex: 1,
-    margin: 6,
     backgroundColor: '#FFFFFF',
     borderRadius: 14,
     overflow: 'hidden',
     borderWidth: 1,
     borderColor: '#EEEEEE',
+  },
+  gridCard: {
+    flex: 1,
+    margin: 6,
+  },
+
+  horizontalCard: {
+    width: 190,
+    marginRight: 12,
   },
   imageContainer: {
     height: 155,
