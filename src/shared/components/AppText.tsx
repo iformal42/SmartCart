@@ -2,11 +2,12 @@ import React from 'react';
 import { StyleSheet, Text, TextProps } from 'react-native';
 type AppTextProps = TextProps & {
   children: React.ReactNode;
+  fontSize?: number;
 };
 
-function AppText({ children, style, ...props }: AppTextProps) {
+function AppText({ children, style, fontSize = 16, ...props }: AppTextProps) {
   return (
-    <Text style={[styles.text, style]} {...props}>
+    <Text style={[styles.text, { fontSize }, style]} {...props}>
       {children}
     </Text>
   );
@@ -14,7 +15,6 @@ function AppText({ children, style, ...props }: AppTextProps) {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 16,
     color: '#000000',
   },
 });
