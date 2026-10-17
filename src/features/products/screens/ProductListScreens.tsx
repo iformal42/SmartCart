@@ -1,188 +1,23 @@
-import React, { useCallback } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import React, { useCallback, useEffect } from 'react';
+import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 import { Product } from '../../../types/product';
 import ProductCard from '../components/ProductCard';
-
-export const products: Product[] = [
-  {
-    id: 1,
-    title: 'Essence Mascara Lash Princess',
-    description:
-      'A popular mascara known for its volumizing and lengthening effects.',
-    category: 'beauty',
-    price: 9.99,
-    discountPercentage: 10.48,
-    rating: 2.56,
-    stock: 99,
-    brand: 'Essence',
-    thumbnail:
-      'https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp',
-    images: [
-      'https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/1.webp',
-    ],
-  },
-  {
-    id: 2,
-    title: 'Eyeshadow Palette with Mirror',
-    description: 'A versatile eyeshadow palette with a built-in mirror.',
-    category: 'beauty',
-    price: 19.99,
-    discountPercentage: 18.19,
-    rating: 2.86,
-    stock: 34,
-    brand: 'Glamour Beauty',
-    thumbnail:
-      'https://cdn.dummyjson.com/product-images/beauty/eyeshadow-palette-with-mirror/thumbnail.webp',
-    images: [
-      'https://cdn.dummyjson.com/product-images/beauty/eyeshadow-palette-with-mirror/1.webp',
-    ],
-  },
-  {
-    id: 3,
-    title: 'Powder Canister',
-    description:
-      'A finely milled setting powder designed to set makeup and control shine.',
-    category: 'beauty',
-    price: 14.99,
-    discountPercentage: 9.84,
-    rating: 4.64,
-    stock: 89,
-    brand: 'Velvet Touch',
-    thumbnail:
-      'https://cdn.dummyjson.com/product-images/beauty/powder-canister/thumbnail.webp',
-    images: [
-      'https://cdn.dummyjson.com/product-images/beauty/powder-canister/1.webp',
-    ],
-  },
-  {
-    id: 4,
-    title: 'Red Lipstick',
-    description: 'A classic red lipstick with a creamy, pigmented finish.',
-    category: 'beauty',
-    price: 12.99,
-    discountPercentage: 12.16,
-    rating: 4.36,
-    stock: 91,
-    brand: 'Chic Cosmetics',
-    thumbnail:
-      'https://cdn.dummyjson.com/product-images/beauty/red-lipstick/thumbnail.webp',
-    images: [
-      'https://cdn.dummyjson.com/product-images/beauty/red-lipstick/1.webp',
-    ],
-  },
-  {
-    id: 5,
-    title: 'Red Nail Polish',
-    description: 'A rich, glossy red nail polish with a quick-drying formula.',
-    category: 'beauty',
-    price: 8.99,
-    discountPercentage: 11.44,
-    rating: 4.32,
-    stock: 79,
-    brand: 'Nail Couture',
-    thumbnail:
-      'https://cdn.dummyjson.com/product-images/beauty/red-nail-polish/thumbnail.webp',
-    images: [
-      'https://cdn.dummyjson.com/product-images/beauty/red-nail-polish/1.webp',
-    ],
-  },
-  {
-    id: 6,
-    title: 'Calvin Klein CK One',
-    description: 'A classic unisex fragrance with a fresh and clean scent.',
-    category: 'fragrances',
-    price: 49.99,
-    discountPercentage: 1.89,
-    rating: 4.37,
-    stock: 29,
-    brand: 'Calvin Klein',
-    thumbnail:
-      'https://cdn.dummyjson.com/product-images/fragrances/calvin-klein-ck-one/thumbnail.webp',
-    images: [
-      'https://cdn.dummyjson.com/product-images/fragrances/calvin-klein-ck-one/1.webp',
-      'https://cdn.dummyjson.com/product-images/fragrances/calvin-klein-ck-one/2.webp',
-      'https://cdn.dummyjson.com/product-images/fragrances/calvin-klein-ck-one/3.webp',
-    ],
-  },
-  {
-    id: 7,
-    title: 'Chanel Coco Noir Eau De',
-    description:
-      'An elegant fragrance featuring grapefruit, rose, and sandalwood notes.',
-    category: 'fragrances',
-    price: 129.99,
-    discountPercentage: 16.51,
-    rating: 4.26,
-    stock: 58,
-    brand: 'Chanel',
-    thumbnail:
-      'https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/thumbnail.webp',
-    images: [
-      'https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/1.webp',
-      'https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/2.webp',
-      'https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/3.webp',
-    ],
-  },
-  {
-    id: 8,
-    title: "Dior J'adore",
-    description:
-      'A luxurious floral fragrance with ylang-ylang, rose, and jasmine.',
-    category: 'fragrances',
-    price: 89.99,
-    discountPercentage: 14.72,
-    rating: 3.8,
-    stock: 98,
-    brand: 'Dior',
-    thumbnail:
-      "https://cdn.dummyjson.com/product-images/fragrances/dior-j'adore/thumbnail.webp",
-    images: [
-      "https://cdn.dummyjson.com/product-images/fragrances/dior-j'adore/1.webp",
-      "https://cdn.dummyjson.com/product-images/fragrances/dior-j'adore/2.webp",
-      "https://cdn.dummyjson.com/product-images/fragrances/dior-j'adore/3.webp",
-    ],
-  },
-  {
-    id: 9,
-    title: 'Dolce Shine Eau de',
-    description:
-      'A vibrant fruity fragrance featuring mango, jasmine, and blonde woods.',
-    category: 'fragrances',
-    price: 69.99,
-    discountPercentage: 0.62,
-    rating: 3.96,
-    stock: 4,
-    brand: 'Dolce & Gabbana',
-    thumbnail:
-      'https://cdn.dummyjson.com/product-images/fragrances/dolce-shine-eau-de/thumbnail.webp',
-    images: [
-      'https://cdn.dummyjson.com/product-images/fragrances/dolce-shine-eau-de/1.webp',
-      'https://cdn.dummyjson.com/product-images/fragrances/dolce-shine-eau-de/2.webp',
-      'https://cdn.dummyjson.com/product-images/fragrances/dolce-shine-eau-de/3.webp',
-    ],
-  },
-  {
-    id: 10,
-    title: 'Gucci Bloom Eau de',
-    description:
-      'A floral fragrance featuring tuberose, jasmine, and Rangoon creeper.',
-    category: 'fragrances',
-    price: 79.99,
-    discountPercentage: 14.39,
-    rating: 2.74,
-    stock: 91,
-    brand: 'Gucci',
-    thumbnail:
-      'https://cdn.dummyjson.com/product-images/fragrances/gucci-bloom-eau-de/thumbnail.webp',
-    images: [
-      'https://cdn.dummyjson.com/product-images/fragrances/gucci-bloom-eau-de/1.webp',
-      'https://cdn.dummyjson.com/product-images/fragrances/gucci-bloom-eau-de/2.webp',
-      'https://cdn.dummyjson.com/product-images/fragrances/gucci-bloom-eau-de/3.webp',
-    ],
-  },
-];
+import { useProducts } from '../hooks/useProducts';
+import Loader from '../../../shared/components/Loader';
+import AppText from '../../../shared/components/AppText';
 
 export default function ProductListScreen() {
+  const {
+    items: products,
+    total,
+    loading,
+    loadingMore,
+    error,
+    hasMore,
+    loadProducts,
+    loadMore,
+    refresh,
+  } = useProducts();
   const renderItem = useCallback(
     ({ item }: { item: Product }) => (
       <ProductCard
@@ -193,25 +28,58 @@ export default function ProductListScreen() {
         onToggleWishlist={(product: Product) => {
           console.log(` wishlist: ${product.title}`);
         }}
-        // isWishlisted={wishlistedIds.includes(item.id)}
       />
     ),
     [],
   );
 
+  const EmptyComponent = useCallback(() => {
+    return (
+      <View style={styles.emptyContainer}>
+        <AppText>No products found</AppText>
+      </View>
+    );
+  }, []);
+
+  const handleEndReached = useCallback(() => {
+    if (!loading && !loadingMore && hasMore) {
+      loadMore();
+    }
+  }, [loading, loadingMore, hasMore, loadMore]);
+
   const keyExtractor = useCallback((item: Product) => String(item.id), []);
+
+  useEffect(() => {
+    if (products.length === 0) {
+      loadProducts();
+    }
+  }, [products.length, loadProducts]);
+
+  if (error) {
+    return (
+      <View style={styles.emptyContainer}>
+        <AppText>Error loading products</AppText>
+        <AppText style={styles.retry} onPress={loadProducts}>
+          Retry
+        </AppText>
+      </View>
+    );
+  }
+  if (loading && products.length === 0) {
+    return <Loader message="Loading products..." />;
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <View>
-          <Text style={styles.eyebrow}>SMARTCART</Text>
-          <Text style={styles.heading}>Discover products</Text>
+          <AppText style={styles.eyebrow}>SMARTCART</AppText>
+          <AppText style={styles.heading}>Discover products</AppText>
         </View>
 
-        <Text style={styles.count}>
-          {products.length} / {10}
-        </Text>
+        <AppText style={styles.count}>
+          {products.length} / {total} products
+        </AppText>
       </View>
 
       <FlatList
@@ -219,6 +87,16 @@ export default function ProductListScreen() {
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         numColumns={2}
+        ListEmptyComponent={EmptyComponent}
+        refreshControl={
+          <RefreshControl refreshing={false} onRefresh={refresh} />
+        }
+        ListFooterComponent={() =>
+          loadingMore ? (
+            <Loader size="small" message="" containerStyle={styles.footer} />
+          ) : null
+        }
+        onEndReached={handleEndReached}
         contentContainerStyle={styles.list}
         columnWrapperStyle={styles.row}
         showsVerticalScrollIndicator={false}
@@ -266,5 +144,19 @@ const styles = StyleSheet.create({
   },
   row: {
     alignItems: 'stretch',
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 50,
+  },
+  footer: {
+    paddingVertical: 10,
+  },
+  retry: {
+    marginTop: 12,
+    color: '#2563EB',
+    fontWeight: '600',
   },
 });
