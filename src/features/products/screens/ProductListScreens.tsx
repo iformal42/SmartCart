@@ -5,6 +5,8 @@ import ProductCard from '../components/ProductCard';
 import { useProducts } from '../hooks/useProducts';
 import Loader from '../../../shared/components/Loader';
 import AppText from '../../../shared/components/AppText';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
+import { toggleWishlist } from '../slices/whitelists.slice';
 
 export default function ProductListScreen() {
   const {
@@ -18,6 +20,18 @@ export default function ProductListScreen() {
     loadMore,
     refresh,
   } = useProducts();
+  const dispatch = useAppDispatch();
+
+  const wishlistedIds = useAppSelector(state =>
+    state.wishlist.items.map(product => product.id),
+  );
+
+  const handleToggleWishlist = useCallback(
+    (product: Product) => {
+      dispatch(toggleWishlist(product));
+    },
+    [dispatch],
+  );
   const renderItem = useCallback(
     ({ item }: { item: Product }) => (
       <ProductCard
@@ -25,12 +39,11 @@ export default function ProductListScreen() {
         onPress={() => {
           console.log(`Pressed product: ${item.title}`);
         }}
-        onToggleWishlist={(product: Product) => {
-          console.log(` wishlist: ${product.title}`);
-        }}
+        onToggleWishlist={handleToggleWishlist}
+        isWishlisted={wishlistedIds.includes(item.id)}
       />
     ),
-    [],
+    [handleToggleWishlist, wishlistedIds],
   );
 
   const EmptyComponent = useCallback(() => {
