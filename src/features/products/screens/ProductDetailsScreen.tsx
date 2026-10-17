@@ -1,9 +1,10 @@
 import React from 'react';
-import { Image, ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../types/naviagation';
 import { ROUTE_NAMES } from '../../app/constants/route.constant';
 import AppText from '../../../shared/components/AppText';
+import ProductGallery from '../components/ProductGallery';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,
@@ -15,11 +16,7 @@ export default function ProductDetailsScreen({ route }: Props) {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Image
-        source={{ uri: product.thumbnail }}
-        style={styles.image}
-        resizeMode="contain"
-      />
+      <ProductGallery product={product} />
 
       <AppText style={styles.category}>{product.category}</AppText>
       <AppText style={styles.title} fontSize={24}>
