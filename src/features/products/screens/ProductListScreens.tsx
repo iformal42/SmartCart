@@ -7,6 +7,10 @@ import Loader from '../../../shared/components/Loader';
 import AppText from '../../../shared/components/AppText';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { toggleWishlist } from '../slices/whitelists.slice';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../../../types/naviagation';
+import { ROUTE_NAMES } from '../../app/constants/route.constant';
 
 export default function ProductListScreen() {
   const {
@@ -21,7 +25,8 @@ export default function ProductListScreen() {
     refresh,
   } = useProducts();
   const dispatch = useAppDispatch();
-
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const wishlistedIds = useAppSelector(state =>
     state.wishlist.items.map(product => product.id),
   );
@@ -36,14 +41,14 @@ export default function ProductListScreen() {
     ({ item }: { item: Product }) => (
       <ProductCard
         product={item}
-        onPress={() => {
-          console.log(`Pressed product: ${item.title}`);
+        onPress={product => {
+          navigation.navigate(ROUTE_NAMES.ProductDetails, { product });
         }}
         onToggleWishlist={handleToggleWishlist}
         isWishlisted={wishlistedIds.includes(item.id)}
       />
     ),
-    [handleToggleWishlist, wishlistedIds],
+    [handleToggleWishlist, wishlistedIds, navigation],
   );
 
   const EmptyComponent = useCallback(() => {
