@@ -17,4 +17,13 @@ export const productsService = {
 
     return response.data;
   },
+  async getSimilarProducts(category: string, currentProductId: number) {
+    const response = await apiClient.get(
+      `/products/category/${encodeURIComponent(category)}`,
+    );
+
+    const data = response.data as ProductsResponse;
+
+    return data.products.filter(product => product.id !== currentProductId);
+  },
 };
