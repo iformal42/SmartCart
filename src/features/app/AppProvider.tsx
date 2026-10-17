@@ -1,12 +1,15 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import ProductListScreen from '../products/screens/ProductListScreens';
+import { NavigationContainer } from '@react-navigation/native';
+import RootNavigator from './navigation/RootNavigator';
 
 function AppProvider() {
   return (
     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
-      <ProductListScreen />
+      <NavigationContainer>
+        <RootNavigator />
+      </NavigationContainer>
     </SafeAreaView>
   );
 }

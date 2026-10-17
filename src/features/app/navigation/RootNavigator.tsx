@@ -1,0 +1,26 @@
+import React from 'react';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import ProductListScreen from '../../products/screens/ProductListScreens';
+import { RootStackParamList } from '../../../types/naviagation';
+import { ROUTE_NAMES } from '../constants/route.constant';
+import ProductDetailsScreen from '../../products/screens/ProductDetailsScreen';
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
+export default function RootNavigator() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name={ROUTE_NAMES.ProductList}
+        component={ProductListScreen}
+        options={{ title: 'Discover Products' }}
+      />
+
+      <Stack.Screen
+        name={ROUTE_NAMES.ProductDetails}
+        component={ProductDetailsScreen}
+        options={{ title: 'Product Details' }}
+      />
+    </Stack.Navigator>
+  );
+}
