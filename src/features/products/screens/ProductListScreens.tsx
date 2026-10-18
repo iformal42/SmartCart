@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   FlatList,
   Pressable,
   RefreshControl,
   StyleSheet,
+  TextInput,
   View,
 } from 'react-native';
 import { Product } from '../../../types/product';
@@ -17,6 +18,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../../../types/naviagation';
 import { ROUTE_NAMES } from '../../app/constants/route.constant';
+import { productsService } from '../services/product.service';
 
 export default function ProductListScreen() {
   const {
@@ -31,6 +33,9 @@ export default function ProductListScreen() {
     refresh,
   } = useProducts();
   const dispatch = useAppDispatch();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<Product[]>([]);
+  const [searching, setSearching] = useState(false);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const wishlistedIds = useAppSelector(state =>
@@ -84,7 +89,29 @@ export default function ProductListScreen() {
       loadProducts();
     }
   }, [products.length, loadProducts]);
+  useEffect(() => {
+    const query = searchQuery.trim();
 
+    if (!query) {
+      setSearchResults([]);
+      return;
+    }
+
+    const timeout = setTimeout(async () => {
+      try {
+        setSearching(true);
+        const result = await productsService.searchProducts(query);
+        setSearchResults(result.products);
+      } catch (error) {
+        console.error('Search failed:', error);
+        setSearchResults([]);
+      } finally {
+        setSearching(false);
+      }
+    }, 400);
+
+    return () => clearTimeout(timeout);
+  }, [searchQuery]);
   if (error) {
     return (
       <View style={styles.emptyContainer}>
@@ -112,6 +139,25 @@ export default function ProductListScreen() {
         </AppText>
       </View>
       <View
+        style={[
+          {
+            flexDirection: 'row',
+            gap: 10,
+          },
+          !searching && { marginRight: 40 },
+        ]}
+      >
+        <TextInput
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          placeholder="Search products..."
+          style={styles.searchInput}
+        />
+        {searching && (
+          <Loader size="small" message="" containerStyle={styles.loader} />
+        )}
+      </View>
+      <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
@@ -135,7 +181,7 @@ export default function ProductListScreen() {
       </View>
 
       <FlatList
-        data={products}
+        data={searchQuery.trim() ? searchResults : products}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         numColumns={2}
@@ -228,5 +274,21 @@ const styles = StyleSheet.create({
   headerButtonText: {
     color: '#171717',
     fontWeight: '600',
+  },
+  searchInput: {
+    height: 46,
+    flex: 1,
+    marginLeft: 10,
+    marginBottom: 12,
+    paddingHorizontal: 14,
+    borderWidth: 1,
+    borderColor: '#DDDDDD',
+    borderRadius: 10,
+    color: '#171717',
+  },
+  loader: {
+    flex: 0,
+    marginRight: 10,
+    justifyContent: 'center',
   },
 });

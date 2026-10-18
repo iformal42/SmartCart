@@ -26,4 +26,11 @@ export const productsService = {
 
     return data.products.filter(product => product.id !== currentProductId);
   },
+  async searchProducts(query: string) {
+    const response = await apiClient.get('/products/search', {
+      params: { q: query },
+    });
+
+    return response.data as ProductsResponse;
+  },
 };
