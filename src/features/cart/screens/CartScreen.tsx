@@ -1,5 +1,12 @@
 import React from 'react';
-import { FlatList, Image, Pressable, StyleSheet, View } from 'react-native';
+import {
+  FlatList,
+  Image,
+  Pressable,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 
@@ -9,9 +16,15 @@ import {
   decrementQuantity,
 } from '../../../shared/components/cart.slice';
 import AppText from '../../../shared/components/AppText';
+import { RootStackParamList } from '../../../types/naviagation';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import { ROUTE_NAMES } from '../../app/constants/route.constant';
 
 export default function CartScreen() {
   const dispatch = useAppDispatch();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const items = useAppSelector(state => state.cart.items);
 
   const subtotal = items.reduce(
@@ -110,6 +123,14 @@ export default function CartScreen() {
           Shipping and taxes calculated at checkout.
         </AppText>
       </View>
+      <TouchableOpacity
+        style={styles.checkoutButton}
+        onPress={() => navigation.navigate(ROUTE_NAMES.Checkout)}
+      >
+        <AppText fontSize={16} style={styles.checkoutButtonText}>
+          Proceed to Checkout
+        </AppText>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -212,5 +233,16 @@ const styles = StyleSheet.create({
   emptySubtitle: {
     marginTop: 8,
     color: '#777777',
+  },
+  checkoutButton: {
+    backgroundColor: '#171717',
+    padding: 16,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  checkoutButtonText: {
+    color: '#FFFFFF',
+    fontWeight: '700',
   },
 });
