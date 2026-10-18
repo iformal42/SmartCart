@@ -5,6 +5,8 @@ import { RootStackParamList } from '../../../types/naviagation';
 import { ROUTE_NAMES } from '../constants/route.constant';
 import ProductDetailsScreen from '../../products/screens/ProductDetailsScreen';
 import CartScreen from '../../cart/screens/CartScreen';
+import CheckoutScreen from '../../order/screen/CheckoutScreen';
+import OrderConfirmationScreen from '../../order/screen/OrderConfirmationScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -26,6 +28,16 @@ export default function RootNavigator() {
         name={ROUTE_NAMES.Cart}
         component={CartScreen}
         options={{ title: 'My Cart' }}
+      />
+      <Stack.Screen
+        name={ROUTE_NAMES.Checkout}
+        component={CheckoutScreen}
+        options={{ title: 'Checkout' }}
+      />
+      <Stack.Screen
+        name={ROUTE_NAMES.OrderConfirmation}
+        component={OrderConfirmationScreen}
+        options={{ title: 'Order Confirmation' }}
       />
     </Stack.Navigator>
   );
