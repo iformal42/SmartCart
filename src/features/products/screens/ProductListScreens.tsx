@@ -111,11 +111,28 @@ export default function ProductListScreen() {
           {products.length} / {total} products
         </AppText>
       </View>
-      <Pressable onPress={() => navigation.navigate(ROUTE_NAMES.Cart)}>
-        <AppText fontSize={16} style={styles.cartButton}>
-          Cart ({cartItemCount})
-        </AppText>
-      </Pressable>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          paddingHorizontal: 18,
+          marginBottom: 10,
+        }}
+      >
+        <Pressable
+          onPress={() => navigation.navigate(ROUTE_NAMES.OrderHistory)}
+          style={styles.headerButton}
+        >
+          <AppText fontSize={13} style={styles.headerButtonText}>
+            My Orders
+          </AppText>
+        </Pressable>
+        <Pressable onPress={() => navigation.navigate(ROUTE_NAMES.Cart)}>
+          <AppText fontSize={16} style={styles.cartButton}>
+            🛒 ({cartItemCount})
+          </AppText>
+        </Pressable>
+      </View>
 
       <FlatList
         data={products}
@@ -200,5 +217,16 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     marginRight: 18,
     marginVertical: 10,
+  },
+  headerButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderWidth: 1,
+    borderColor: '#DDDDDD',
+    borderRadius: 8,
+  },
+  headerButtonText: {
+    color: '#171717',
+    fontWeight: '600',
   },
 });

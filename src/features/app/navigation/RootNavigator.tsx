@@ -7,6 +7,7 @@ import ProductDetailsScreen from '../../products/screens/ProductDetailsScreen';
 import CartScreen from '../../cart/screens/CartScreen';
 import CheckoutScreen from '../../order/screen/CheckoutScreen';
 import OrderConfirmationScreen from '../../order/screen/OrderConfirmationScreen';
+import OrderHistoryScreen from '../../order/screen/OrderHistoryScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -38,6 +39,11 @@ export default function RootNavigator() {
         name={ROUTE_NAMES.OrderConfirmation}
         component={OrderConfirmationScreen}
         options={{ title: 'Order Confirmation' }}
+      />
+      <Stack.Screen
+        name={ROUTE_NAMES.OrderHistory}
+        component={OrderHistoryScreen}
+        options={{ title: 'Order History' }}
       />
     </Stack.Navigator>
   );

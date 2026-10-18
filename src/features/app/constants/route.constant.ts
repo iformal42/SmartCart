@@ -6,4 +6,5 @@ export const ROUTE_NAMES: { [K in keyof RootStackParamList]: K } = {
   Cart: 'Cart',
   Checkout: 'Checkout',
   OrderConfirmation: 'OrderConfirmation',
+  OrderHistory: 'OrderHistory',
 };

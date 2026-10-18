@@ -8,4 +8,5 @@ export type RootStackParamList = {
   Cart: undefined;
   Checkout: undefined;
   OrderConfirmation: undefined;
+  OrderHistory: undefined;
 };
