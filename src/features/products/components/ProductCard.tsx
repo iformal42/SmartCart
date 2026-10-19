@@ -1,6 +1,7 @@
 import React from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, View } from 'react-native';
 import type { Product } from '../../../types/product';
+import AppText from '../../../shared/components/AppText';
 
 interface ProductCardProps {
   product: Product;
@@ -51,27 +52,31 @@ function ProductCard({
             isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'
           }
         >
-          <Text style={styles.heart}>{isWishlisted ? '♥' : '♡'}</Text>
+          <AppText style={styles.heart} fontSize={21}>
+            {isWishlisted ? '♥' : '♡'}
+          </AppText>
         </Pressable>
       </View>
 
       <View style={styles.details}>
-        <Text style={styles.category} numberOfLines={1}>
+        <AppText style={styles.category} numberOfLines={1} fontSize={11}>
           {product.category}
-        </Text>
+        </AppText>
 
-        <Text style={styles.title} numberOfLines={2}>
+        <AppText style={styles.title} numberOfLines={2} fontSize={14}>
           {product.title}
-        </Text>
+        </AppText>
 
         <View style={styles.ratingRow}>
-          <Text style={styles.rating}>★ {product.rating.toFixed(1)}</Text>
-          <Text style={styles.stock}>
+          <AppText style={styles.rating} fontSize={12}>
+            ★ {product.rating.toFixed(1)}
+          </AppText>
+          <AppText style={styles.stock} fontSize={10}>
             {product.stock > 0 ? 'In stock' : 'Out of stock'}
-          </Text>
+          </AppText>
         </View>
 
-        <Text style={styles.price}>${product.price.toFixed(2)}</Text>
+        <AppText style={styles.price}>${product.price.toFixed(2)}</AppText>
       </View>
     </Pressable>
   );
@@ -118,21 +123,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   heart: {
-    fontSize: 21,
     color: '#E24C62',
   },
   details: {
     padding: 10,
   },
   category: {
-    fontSize: 11,
     color: '#777777',
     textTransform: 'capitalize',
   },
   title: {
     minHeight: 38,
     marginTop: 5,
-    fontSize: 14,
     fontWeight: '600',
     color: '#202020',
   },
@@ -148,12 +150,10 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   stock: {
-    fontSize: 10,
     color: '#39805A',
   },
   price: {
     marginTop: 8,
-    fontSize: 17,
     fontWeight: '700',
     color: '#171717',
   },
