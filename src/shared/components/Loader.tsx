@@ -19,7 +19,12 @@ function Loader({
   containerStyle,
 }: LoaderProps) {
   return (
-    <View style={[styles.container, containerStyle]}>
+    <View
+      style={[
+        size === 'small' ? styles.smallContainer : styles.container,
+        containerStyle,
+      ]}
+    >
       <ActivityIndicator size={size} />
       <AppText>{message}</AppText>
     </View>
@@ -31,6 +36,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  smallContainer: {
+    flex: 0,
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
 });
 

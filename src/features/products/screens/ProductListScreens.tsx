@@ -19,6 +19,7 @@ import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../../../types/naviagation';
 import { ROUTE_NAMES } from '../../app/constants/route.constant';
 import { productsService } from '../services/product.service';
+import ProductCategory from '../components/ProductCategory';
 
 export default function ProductListScreen() {
   const {
@@ -36,6 +37,11 @@ export default function ProductListScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<Product[]>([]);
   const [searching, setSearching] = useState(false);
+  const [loadingCategory, setLoadingCategory] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [categoryProducts, setCategoryProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const wishlistedIds = useAppSelector(state =>
@@ -112,6 +118,39 @@ export default function ProductListScreen() {
 
     return () => clearTimeout(timeout);
   }, [searchQuery]);
+
+  useEffect(() => {
+    if (!selectedCategory) {
+      setCategoryProducts([]);
+      return;
+    }
+
+    async function loadCategoryProducts() {
+      setLoadingCategory(true);
+
+      try {
+        const result = await productsService.getProductsByCategory(
+          selectedCategory!,
+        );
+
+        setCategoryProducts(result.products);
+      } catch (error) {
+        console.error('Failed to load category products:', error);
+        setCategoryProducts([]);
+      } finally {
+        setLoadingCategory(false);
+      }
+    }
+    loadCategoryProducts();
+  }, [selectedCategory, setCategoryProducts, setLoadingCategory]);
+
+  useEffect(() => {
+    productsService
+      .getCategories()
+      .then(setCategories)
+      .catch(error => console.error('Failed to load categories:', error));
+  }, []);
+
   if (error) {
     return (
       <View style={styles.emptyContainer}>
@@ -125,6 +164,12 @@ export default function ProductListScreen() {
   if (loading && products.length === 0) {
     return <Loader message="Loading products..." />;
   }
+
+  const displayedProducts = searchQuery.trim()
+    ? searchResults
+    : selectedCategory
+    ? categoryProducts
+    : products;
 
   return (
     <View style={styles.container}>
@@ -157,12 +202,16 @@ export default function ProductListScreen() {
           <Loader size="small" message="" containerStyle={styles.loader} />
         )}
       </View>
+      <ProductCategory
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        categories={categories}
+      />
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
           paddingHorizontal: 18,
-          marginBottom: 10,
         }}
       >
         <Pressable
@@ -179,9 +228,11 @@ export default function ProductListScreen() {
           </AppText>
         </Pressable>
       </View>
-
+      {loadingCategory && (
+        <Loader size="small" message="" containerStyle={styles.loader} />
+      )}
       <FlatList
-        data={searchQuery.trim() ? searchResults : products}
+        data={displayedProducts}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         numColumns={2}

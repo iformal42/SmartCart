@@ -33,4 +33,16 @@ export const productsService = {
 
     return response.data as ProductsResponse;
   },
+  async getCategories(): Promise<string[]> {
+    const response = await apiClient.get('/products/category-list');
+    console.log('Fetched categories:', response.data);
+    return response.data;
+  },
+  async getProductsByCategory(category: string): Promise<ProductsResponse> {
+    const response = await apiClient.get(
+      `/products/category/${encodeURIComponent(category)}`,
+    );
+
+    return response.data as ProductsResponse;
+  },
 };
