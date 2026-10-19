@@ -3,6 +3,7 @@ import {
   FlatList,
   Pressable,
   RefreshControl,
+  ScrollView,
   StyleSheet,
   TextInput,
   View,
@@ -41,6 +42,8 @@ export default function ProductListScreen() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [categoryProducts, setCategoryProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
+  const [sortBy, setSortBy] = useState('default');
+  const [inStockOnly, setInStockOnly] = useState(false);
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -171,6 +174,21 @@ export default function ProductListScreen() {
     ? categoryProducts
     : products;
 
+  const filteredProducts = displayedProducts
+    .filter(product => !inStockOnly || product.stock > 0)
+    .sort((a, b) => {
+      switch (sortBy) {
+        case 'priceLow':
+          return a.price - b.price;
+        case 'priceHigh':
+          return b.price - a.price;
+        case 'rating':
+          return b.rating - a.rating;
+        default:
+          return 0;
+      }
+    });
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -207,6 +225,34 @@ export default function ProductListScreen() {
         setSelectedCategory={setSelectedCategory}
         categories={categories}
       />
+      <View style={styles.filterRow}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {[
+            { label: 'Default', value: 'default' },
+            { label: 'Price: Low', value: 'priceLow' },
+            { label: 'Price: High', value: 'priceHigh' },
+            { label: 'Top Rated', value: 'rating' },
+          ].map(option => (
+            <Pressable
+              key={option.value}
+              style={[
+                styles.filterButton,
+                sortBy === option.value && styles.activeFilter,
+              ]}
+              onPress={() => setSortBy(option.value)}
+            >
+              <AppText fontSize={12}>{option.label}</AppText>
+            </Pressable>
+          ))}
+        </ScrollView>
+      </View>
+
+      <Pressable
+        style={styles.stockFilter}
+        onPress={() => setInStockOnly(!inStockOnly)}
+      >
+        <AppText fontSize={13}>{inStockOnly ? '☑' : '☐'} In Stock Only</AppText>
+      </Pressable>
       <View
         style={{
           flexDirection: 'row',
@@ -232,7 +278,7 @@ export default function ProductListScreen() {
         <Loader size="small" message="" containerStyle={styles.loader} />
       )}
       <FlatList
-        data={displayedProducts}
+        data={filteredProducts}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
         numColumns={2}
@@ -245,7 +291,11 @@ export default function ProductListScreen() {
             <Loader size="small" message="" containerStyle={styles.footer} />
           ) : null
         }
-        onEndReached={handleEndReached}
+        onEndReached={
+          !searchQuery.trim() && !selectedCategory
+            ? handleEndReached
+            : undefined
+        }
         contentContainerStyle={styles.list}
         columnWrapperStyle={styles.row}
         showsVerticalScrollIndicator={false}
@@ -341,5 +391,25 @@ const styles = StyleSheet.create({
     flex: 0,
     marginRight: 10,
     justifyContent: 'center',
+  },
+  filterRow: {
+    paddingHorizontal: 16,
+    marginBottom: 10,
+  },
+  filterButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 9,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#DDDDDD',
+    marginRight: 8,
+  },
+  activeFilter: {
+    backgroundColor: '#E5E5E5',
+    borderColor: '#171717',
+  },
+  stockFilter: {
+    paddingHorizontal: 16,
+    paddingBottom: 12,
   },
 });
