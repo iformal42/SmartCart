@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { FlatList, Image, StyleSheet, View, Dimensions } from 'react-native';
 import { Product } from '../../../types/product';
 import AppText from '../../../shared/components/AppText';
+import {
+  moderateScale,
+  moderateVerticalScale,
+} from '../../app/scripts/scaling';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -55,30 +59,30 @@ export default function ProductGallery({ product }: ProductGalleryProps) {
 
 const styles = StyleSheet.create({
   image: {
-    width: SCREEN_WIDTH - 40,
-    height: 280,
+    width: SCREEN_WIDTH - moderateScale(40),
+    height: moderateVerticalScale(280),
     backgroundColor: '#F7F7F7',
-    borderRadius: 16,
+    borderRadius: moderateScale(16),
   },
   indicators: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 12,
-    gap: 6,
+    marginTop: moderateVerticalScale(12),
+    gap: moderateScale(6),
   },
   dot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
+    width: moderateScale(6),
+    height: moderateVerticalScale(6),
+    borderRadius: moderateScale(3),
     backgroundColor: '#D4D4D4',
   },
   activeDot: {
-    width: 18,
+    width: moderateScale(18),
     backgroundColor: '#171717',
   },
   imageCount: {
     textAlign: 'center',
     color: '#777777',
-    marginTop: 8,
+    marginTop: moderateVerticalScale(8),
   },
 });

@@ -21,6 +21,10 @@ import { RootStackParamList } from '../../../types/naviagation';
 import { ROUTE_NAMES } from '../../app/constants/route.constant';
 import { productsService } from '../services/product.service';
 import ProductCategory from '../components/ProductCategory';
+import {
+  moderateScale,
+  moderateVerticalScale,
+} from '../../app/scripts/scaling';
 
 export default function ProductListScreen() {
   const {
@@ -205,9 +209,9 @@ export default function ProductListScreen() {
         style={[
           {
             flexDirection: 'row',
-            gap: 10,
+            gap: moderateScale(10),
           },
-          !searching && { marginRight: 40 },
+          !searching && { marginRight: moderateScale(40) },
         ]}
       >
         <TextInput
@@ -257,7 +261,7 @@ export default function ProductListScreen() {
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
-          paddingHorizontal: 18,
+          paddingHorizontal: moderateScale(18),
         }}
       >
         <Pressable
@@ -314,9 +318,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   header: {
-    paddingHorizontal: 18,
-    paddingTop: 14,
-    paddingBottom: 16,
+    paddingHorizontal: moderateScale(18),
+    paddingTop: moderateVerticalScale(14),
+    paddingBottom: moderateVerticalScale(16),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -331,15 +335,15 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '800',
     color: '#171717',
-    marginTop: 5,
+    marginTop: moderateVerticalScale(5),
   },
   count: {
     fontSize: 12,
     color: '#777777',
   },
   list: {
-    paddingHorizontal: 10,
-    paddingBottom: 20,
+    paddingHorizontal: moderateScale(10),
+    paddingBottom: moderateVerticalScale(20),
   },
   row: {
     alignItems: 'stretch',
@@ -348,13 +352,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 50,
+    marginTop: moderateVerticalScale(50),
   },
   footer: {
-    paddingVertical: 10,
+    paddingVertical: moderateVerticalScale(10),
   },
   retry: {
-    marginTop: 12,
+    marginTop: moderateVerticalScale(12),
     color: '#2563EB',
     fontWeight: '600',
   },
@@ -362,54 +366,54 @@ const styles = StyleSheet.create({
     color: '#2563EB',
     fontWeight: '600',
     alignSelf: 'flex-end',
-    marginRight: 18,
-    marginVertical: 10,
+    marginRight: moderateScale(18),
+    marginVertical: moderateVerticalScale(10),
   },
   headerButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 12,
+    paddingVertical: moderateVerticalScale(8),
+    paddingHorizontal: moderateScale(12),
     borderWidth: 1,
     borderColor: '#DDDDDD',
-    borderRadius: 8,
+    borderRadius: moderateScale(8),
   },
   headerButtonText: {
     color: '#171717',
     fontWeight: '600',
   },
   searchInput: {
-    height: 46,
+    height: moderateVerticalScale(46),
     flex: 1,
-    marginLeft: 10,
-    marginBottom: 12,
-    paddingHorizontal: 14,
+    marginLeft: moderateScale(10),
+    marginBottom: moderateVerticalScale(12),
+    paddingHorizontal: moderateScale(14),
     borderWidth: 1,
     borderColor: '#DDDDDD',
-    borderRadius: 10,
+    borderRadius: moderateScale(10),
     color: '#171717',
   },
   loader: {
     flex: 0,
-    marginRight: 10,
+    marginRight: moderateScale(10),
     justifyContent: 'center',
   },
   filterRow: {
-    paddingHorizontal: 16,
-    marginBottom: 10,
+    paddingHorizontal: moderateScale(16),
+    marginBottom: moderateVerticalScale(10),
   },
   filterButton: {
-    paddingHorizontal: 12,
-    paddingVertical: 9,
-    borderRadius: 8,
+    paddingHorizontal: moderateScale(12),
+    paddingVertical: moderateVerticalScale(9),
+    borderRadius: moderateScale(8),
     borderWidth: 1,
     borderColor: '#DDDDDD',
-    marginRight: 8,
+    marginRight: moderateScale(8),
   },
   activeFilter: {
     backgroundColor: '#E5E5E5',
     borderColor: '#171717',
   },
   stockFilter: {
-    paddingHorizontal: 16,
-    paddingBottom: 12,
+    paddingHorizontal: moderateScale(16),
+    paddingBottom: moderateVerticalScale(12),
   },
 });

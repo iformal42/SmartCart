@@ -2,6 +2,10 @@ import React from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { useAppSelector } from '../../../hooks/hooks';
 import AppText from '../../../shared/components/AppText';
+import {
+  moderateScale,
+  moderateVerticalScale,
+} from '../../app/scripts/scaling';
 
 export default function OrderHistoryScreen() {
   const orders = useAppSelector(state => state.order.items);
@@ -42,25 +46,25 @@ export default function OrderHistoryScreen() {
 
 const styles = StyleSheet.create({
   list: {
-    padding: 16,
+    padding: moderateScale(16),
   },
   card: {
     backgroundColor: '#F8F8F8',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
+    borderRadius: moderateScale(12),
+    padding: moderateScale(16),
+    marginBottom: moderateVerticalScale(12),
   },
   orderId: {
     fontWeight: '700',
   },
   date: {
     color: '#777777',
-    marginTop: 6,
-    marginBottom: 12,
+    marginTop: moderateVerticalScale(6),
+    marginBottom: moderateVerticalScale(12),
   },
   total: {
     fontWeight: '800',
-    marginTop: 10,
+    marginTop: moderateVerticalScale(10),
   },
   empty: {
     flex: 1,

@@ -4,6 +4,10 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import AppText from '../../../shared/components/AppText';
 import { RootStackParamList } from '../../../types/naviagation';
 import { ROUTE_NAMES } from '../../app/constants/route.constant';
+import {
+  moderateScale,
+  moderateVerticalScale,
+} from '../../app/scripts/scaling';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,
@@ -41,24 +45,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 24,
+    padding: moderateScale(24),
   },
   title: {
     fontWeight: '700',
     textAlign: 'center',
-    marginTop: 16,
+    marginTop: moderateVerticalScale(16),
   },
   subtitle: {
     color: '#777777',
     textAlign: 'center',
-    marginTop: 10,
+    marginTop: moderateVerticalScale(10),
   },
   button: {
     backgroundColor: '#171717',
-    padding: 16,
-    borderRadius: 12,
+    paddingVertical: moderateVerticalScale(16),
+    paddingHorizontal: moderateScale(16),
+    borderRadius: moderateScale(12),
     alignItems: 'center',
-    marginTop: 28,
+    marginTop: moderateVerticalScale(28),
     width: '100%',
   },
   buttonText: {

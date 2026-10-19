@@ -2,6 +2,10 @@ import React from 'react';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
 import type { Product } from '../../../types/product';
 import AppText from '../../../shared/components/AppText';
+import {
+  moderateScale,
+  moderateVerticalScale,
+} from '../../app/scripts/scaling';
 
 interface ProductCardProps {
   product: Product;
@@ -87,22 +91,22 @@ export default ProductCard;
 const styles = StyleSheet.create({
   card: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 14,
+    borderRadius: moderateScale(14),
     overflow: 'hidden',
     borderWidth: 1,
     borderColor: '#EEEEEE',
   },
   gridCard: {
     flex: 1,
-    margin: 6,
+    margin: moderateScale(6),
   },
 
   horizontalCard: {
-    width: 190,
-    marginRight: 12,
+    width: moderateScale(190),
+    marginRight: moderateScale(12),
   },
   imageContainer: {
-    height: 155,
+    height: moderateVerticalScale(155),
     backgroundColor: '#F8F8F8',
     alignItems: 'center',
     justifyContent: 'center',
@@ -113,11 +117,11 @@ const styles = StyleSheet.create({
   },
   wishlistButton: {
     position: 'absolute',
-    top: 8,
-    right: 8,
-    width: 34,
-    height: 34,
-    borderRadius: 17,
+    top: moderateVerticalScale(8),
+    right: moderateScale(8),
+    width: moderateScale(34),
+    height: moderateVerticalScale(34),
+    borderRadius: moderateScale(17),
     backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
@@ -126,15 +130,15 @@ const styles = StyleSheet.create({
     color: '#E24C62',
   },
   details: {
-    padding: 10,
+    padding: moderateScale(10),
   },
   category: {
     color: '#777777',
     textTransform: 'capitalize',
   },
   title: {
-    minHeight: 38,
-    marginTop: 5,
+    minHeight: moderateVerticalScale(38),
+    marginTop: moderateVerticalScale(5),
     fontWeight: '600',
     color: '#202020',
   },
@@ -142,7 +146,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: 7,
+    marginTop: moderateVerticalScale(7),
   },
   rating: {
     color: '#A56A00',
@@ -153,7 +157,7 @@ const styles = StyleSheet.create({
     color: '#39805A',
   },
   price: {
-    marginTop: 8,
+    marginTop: moderateVerticalScale(8),
     fontWeight: '700',
     color: '#171717',
   },

@@ -1,6 +1,11 @@
 import React from 'react';
 import { StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import AppText from '../../../shared/components/AppText';
+import {
+  moderateScale,
+  moderateVerticalScale,
+} from '../../app/scripts/scaling';
+
 function ProductCategory({
   selectedCategory,
   setSelectedCategory,
@@ -48,17 +53,17 @@ function ProductCategory({
 
 const styles = StyleSheet.create({
   categories: {
-    paddingHorizontal: 16,
-    marginBottom: 28,
-    gap: 8,
+    paddingHorizontal: moderateScale(16),
+    marginBottom: moderateVerticalScale(28),
+    gap: moderateScale(8),
   },
   categoryButton: {
-    height: 32,
-    paddingHorizontal: 12,
+    height: moderateVerticalScale(32),
+    paddingHorizontal: moderateScale(12),
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 20,
+    borderRadius: moderateScale(20),
     borderWidth: 1,
     borderColor: '#DDDDDD',
   },
@@ -66,10 +71,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#E5E5E5',
     borderColor: '#171717',
   },
-  categoryButtonText: {
-    // padding: 10,s
-    // alignSelf: 'center',
-  },
+  categoryButtonText: {},
 });
 
 export default React.memo(ProductCategory);

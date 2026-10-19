@@ -22,6 +22,10 @@ import { useNavigation } from '@react-navigation/native';
 import { toggleWishlist } from '../slices/whitelists.slice';
 import { Product } from '../../../types/product';
 import { addToCart } from '../../../shared/components/cart.slice';
+import {
+  moderateScale,
+  moderateVerticalScale,
+} from '../../app/scripts/scaling';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,
@@ -121,58 +125,59 @@ export default function ProductDetailsScreen({ route }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding: moderateScale(20),
     backgroundColor: '#FFFFFF',
     flexGrow: 1,
   },
   image: {
     width: '100%',
-    height: 280,
+    height: moderateVerticalScale(280),
     backgroundColor: '#F7F7F7',
-    borderRadius: 16,
+    borderRadius: moderateScale(16),
   },
   category: {
-    marginTop: 20,
+    marginTop: moderateVerticalScale(20),
     color: '#777777',
     textTransform: 'capitalize',
   },
   title: {
     fontWeight: '700',
     color: '#171717',
-    marginTop: 8,
+    marginTop: moderateVerticalScale(8),
   },
   rating: {
-    marginTop: 8,
+    marginTop: moderateVerticalScale(8),
     color: '#555555',
   },
   price: {
     fontWeight: '700',
     color: '#171717',
-    marginTop: 12,
+    marginTop: moderateVerticalScale(12),
   },
   descriptionContainer: {
-    marginTop: 24,
+    marginTop: moderateVerticalScale(24),
   },
   heading: {
     fontWeight: '700',
     color: '#171717',
-    marginBottom: 8,
+    marginBottom: moderateVerticalScale(8),
   },
   description: {
-    lineHeight: 23,
+    lineHeight: moderateVerticalScale(23),
     color: '#555555',
   },
   stock: {
-    marginTop: 20,
+    marginTop: moderateVerticalScale(20),
     color: '#16803D',
     fontWeight: '600',
   },
   addToCartButton: {
     backgroundColor: '#171717',
-    padding: 16,
-    borderRadius: 12,
+    paddingVertical: moderateVerticalScale(16),
+    paddingHorizontal: moderateScale(16),
+    borderRadius: moderateScale(12),
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: moderateVerticalScale(20),
   },
   addToCartText: {
     color: '#FFFFFF',

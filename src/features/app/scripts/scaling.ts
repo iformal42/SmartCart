@@ -17,4 +17,7 @@ const responsiveFontSize = (size: number) => {
 
 const font = (size: number) => responsiveFontSize(size);
 
-export { scale, verticalScale, moderateScale, font };
+const moderateVerticalScale = (size: number, factor = 0.5) =>
+  size + (verticalScale(size) - size) * factor;
+
+export { scale, verticalScale, moderateScale, moderateVerticalScale, font };

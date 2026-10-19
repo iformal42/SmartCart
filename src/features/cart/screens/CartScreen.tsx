@@ -20,6 +20,10 @@ import { RootStackParamList } from '../../../types/naviagation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTE_NAMES } from '../../app/constants/route.constant';
+import {
+  moderateScale,
+  moderateVerticalScale,
+} from '../../app/scripts/scaling';
 
 export default function CartScreen() {
   const dispatch = useAppDispatch();
@@ -141,24 +145,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   list: {
-    padding: 16,
+    padding: moderateScale(16),
   },
   card: {
     flexDirection: 'row',
-    padding: 12,
-    marginBottom: 12,
-    borderRadius: 12,
+    padding: moderateScale(12),
+    marginBottom: moderateVerticalScale(12),
+    borderRadius: moderateScale(12),
     backgroundColor: '#F8F8F8',
   },
   image: {
-    width: 100,
-    height: 110,
+    width: moderateScale(100),
+    height: moderateVerticalScale(110),
     backgroundColor: '#FFFFFF',
-    borderRadius: 8,
+    borderRadius: moderateScale(8),
   },
   details: {
     flex: 1,
-    marginLeft: 12,
+    marginLeft: moderateScale(12),
     justifyContent: 'center',
   },
   title: {
@@ -167,19 +171,19 @@ const styles = StyleSheet.create({
   },
   price: {
     fontWeight: '700',
-    marginTop: 8,
+    marginTop: moderateVerticalScale(8),
     color: '#171717',
   },
   quantityRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 12,
-    gap: 10,
+    marginTop: moderateVerticalScale(12),
+    gap: moderateScale(10),
   },
   quantityButton: {
-    width: 30,
-    height: 30,
-    borderRadius: 8,
+    width: moderateScale(30),
+    height: moderateVerticalScale(30),
+    borderRadius: moderateScale(8),
     borderWidth: 1,
     borderColor: '#DDDDDD',
     alignItems: 'center',
@@ -199,7 +203,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   summary: {
-    padding: 20,
+    padding: moderateScale(20),
     borderTopWidth: 1,
     borderTopColor: '#EEEEEE',
   },
@@ -217,7 +221,7 @@ const styles = StyleSheet.create({
     color: '#171717',
   },
   note: {
-    marginTop: 8,
+    marginTop: moderateVerticalScale(8),
     color: '#777777',
   },
   emptyContainer: {
@@ -231,15 +235,16 @@ const styles = StyleSheet.create({
     color: '#171717',
   },
   emptySubtitle: {
-    marginTop: 8,
+    marginTop: moderateVerticalScale(8),
     color: '#777777',
   },
   checkoutButton: {
     backgroundColor: '#171717',
-    padding: 16,
-    borderRadius: 12,
+    paddingVertical: moderateVerticalScale(16),
+    paddingHorizontal: moderateScale(16),
+    borderRadius: moderateScale(12),
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: moderateVerticalScale(20),
   },
   checkoutButtonText: {
     color: '#FFFFFF',

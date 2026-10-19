@@ -8,6 +8,10 @@ import { RootStackParamList } from '../../../types/naviagation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { ROUTE_NAMES } from '../../app/constants/route.constant';
+import {
+  moderateScale,
+  moderateVerticalScale,
+} from '../../app/scripts/scaling';
 
 export default function CheckoutScreen() {
   const items = useAppSelector(state => state.cart.items);
@@ -92,17 +96,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-    padding: 20,
+    padding: moderateScale(20),
   },
   heading: {
     fontWeight: '700',
-    marginBottom: 20,
+    marginBottom: moderateVerticalScale(20),
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 16,
-    gap: 12,
+    marginBottom: moderateVerticalScale(16),
+    gap: moderateScale(12),
   },
   product: {
     flex: 1,
@@ -112,8 +116,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderTopWidth: 1,
     borderTopColor: '#EEEEEE',
-    paddingTop: 18,
-    marginTop: 8,
+    paddingTop: moderateVerticalScale(18),
+    marginTop: moderateVerticalScale(8),
   },
   totalLabel: {
     fontWeight: '600',
@@ -123,10 +127,11 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#171717',
-    padding: 16,
-    borderRadius: 12,
+    paddingVertical: moderateVerticalScale(16),
+    paddingHorizontal: moderateScale(16),
+    borderRadius: moderateScale(12),
     alignItems: 'center',
-    marginTop: 28,
+    marginTop: moderateVerticalScale(28),
   },
   buttonText: {
     color: '#FFFFFF',
@@ -135,6 +140,6 @@ const styles = StyleSheet.create({
   note: {
     color: '#777777',
     textAlign: 'center',
-    marginTop: 12,
+    marginTop: moderateVerticalScale(12),
   },
 });
