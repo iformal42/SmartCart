@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import RootNavigator from './navigation/RootNavigator';
 import { useWishlistPersistence } from '../products/hooks/useWishlistPersistence';
 import { useCartPersistence } from '../cart/hooks/useCartPersistence';
+import NetworkBanner from './components/NetworkBanner';
 
 function AppProvider() {
   useWishlistPersistence();
@@ -12,6 +13,8 @@ function AppProvider() {
   return (
     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <NavigationContainer>
+        <NetworkBanner />
+
         <RootNavigator />
       </NavigationContainer>
     </SafeAreaView>

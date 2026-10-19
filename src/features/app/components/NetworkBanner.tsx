@@ -23,6 +23,9 @@ const NetworkBanner = () => {
 
     if (networkStatusRef.current === 'offline') {
       setIsConnectionOn(true);
+      setTimeout(() => {
+        setIsConnectionOn(null);
+      }, 3000);
     }
 
     networkStatusRef.current = 'online';
@@ -30,7 +33,12 @@ const NetworkBanner = () => {
 
   if (isConnectionOn !== null) {
     return (
-      <View style={[styles.banner, styles.offline]}>
+      <View
+        style={[
+          styles.banner,
+          isConnectionOn === false ? styles.offline : styles.online,
+        ]}
+      >
         <AppText fontSize={13} style={styles.text}>
           {isConnectionOn === false
             ? "You're offline. Check your internet connection."
