@@ -56,7 +56,7 @@ Endpoints used include:
 Clone the repository and navigate to the project directory:
 
 ```bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
+git clone https://github.com/iformal42/SmartCart.git
 cd SmartCart
 npm install
 ```
